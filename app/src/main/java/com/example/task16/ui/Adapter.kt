@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task16.data.ContactItem
 
-class Adapter(var phoneItems: List<ContactItem>, ) :
+class Adapter(private var phoneItems: List<ContactItem>, ) :
     RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -22,6 +22,10 @@ class Adapter(var phoneItems: List<ContactItem>, ) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val images = phoneItems[position]
         holder.bind(images)
+    }
+
+    fun setList(list: List<ContactItem>) {
+       phoneItems = list
     }
 }
 

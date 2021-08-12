@@ -1,6 +1,6 @@
 package com.example.task16.util
 
-const val JSON_PHONE_DIRECTORY = """[{
+const val JSON_PHONES = """[{
     "name": "(Приёмная)",
     "phone": "+375 (2239) 7-17-80",
     "type": ""
