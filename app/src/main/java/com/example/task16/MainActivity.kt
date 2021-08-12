@@ -2,7 +2,7 @@ package com.example.task16
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.task16.data.ModelItem
+import com.example.task16.data.ContactItem
 import com.example.task16.util.GSON_PHONE_DIRECTORY_
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -13,12 +13,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val jsonList = GSON_PHONE_DIRECTORY_
+        val jsonPhoneDirectory = GSON_PHONE_DIRECTORY_
         val gson = Gson()
-        val listOfModels = object : TypeToken<List<ModelItem>>() {}.type
-        val models: List<ModelItem> = gson.fromJson(jsonList, listOfModels)
+        val listOfContacts = object : TypeToken<List<ContactItem>>() {}.type
+        val contacts: List<ContactItem> = gson.fromJson(jsonPhoneDirectory, listOfContacts)
 
-        val listOfModelsForReading = models.forEachIndexed  { idx, tut -> println("> Item ${idx}:\n${tut}") }
-        Timber.d(listOfModelsForReading.toString())
+        val listOfContactsWithInformation = contacts.forEachIndexed  { idx, contact -> println("> Item ${idx}:\n${contact}") }
+        Timber.d(listOfContactsWithInformation.toString())
     }
 }
