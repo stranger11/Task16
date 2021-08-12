@@ -1,6 +1,6 @@
 package com.example.task16.util
 
-const val GSON_PHONE_DIRECTORY_ = """[{
+const val JSON_PHONE_DIRECTORY = """[{
     "name": "(Приёмная)",
     "phone": "+375 (2239) 7-17-80",
     "type": ""
