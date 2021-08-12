@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.task16.Adapter
 import com.example.task16.data.ContactItem
 import com.example.task16.databinding.ActivityMainBinding
-import com.example.task16.util.JSON_PHONES
+import com.example.task16.util.PHONES_JSON
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -42,16 +42,14 @@ class MainActivity : AppCompatActivity() {
                                 || it.name.contains(etSearchBarText.toString(), true)
                     })
                 }
-                adapter.notifyDataSetChanged()
             }
         })
     }
 
     private fun parseContacts() : List<ContactItem> {
-        val phonesJson = JSON_PHONES
         val gson = Gson()
-        val listOfPhones = object : TypeToken<List<ContactItem>>() {}.type
-        return gson.fromJson(phonesJson, listOfPhones)
+        val uniType = object : TypeToken<List<ContactItem>>() {}.type
+        return gson.fromJson(PHONES_JSON, uniType)
     }
 
     private fun initRecyclerView(adapter: Adapter) {

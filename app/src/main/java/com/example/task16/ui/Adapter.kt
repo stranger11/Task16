@@ -25,7 +25,9 @@ class Adapter(private var phoneItems: List<ContactItem>, ) :
     }
 
     fun setList(list: List<ContactItem>) {
-       phoneItems = list
+        phoneItems = list
+        notifyDataSetChanged()
+
     }
 }
 
