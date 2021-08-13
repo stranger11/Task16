@@ -48,8 +48,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun parseContacts() : List<ContactItem> {
         val gson = Gson()
-        val uniType = object : TypeToken<List<ContactItem>>() {}.type
-        return gson.fromJson(PHONES_JSON, uniType)
+        val tokenForParse = object : TypeToken<List<ContactItem>>() {}.type
+        return gson.fromJson(PHONES_JSON, tokenForParse)
     }
 
     private fun initRecyclerView(adapter: Adapter) {
