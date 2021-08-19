@@ -40,10 +40,7 @@ class MainActivity : AppCompatActivity() {
                 if (etSearchBarText.isEmpty()) {
                     adapter.submitList(contacts)
                 } else {
-                    adapter.submitList(contacts.filter {
-                        it.name.startsWith(etSearchBarText.toString(), true)
-                                || it.name.contains(etSearchBarText.toString(), true)
-                    })
+                    listFilter(contacts, adapter)
                     saveState(etSearchBarText.toString())
                 }
             }
@@ -75,8 +72,11 @@ class MainActivity : AppCompatActivity() {
                 this.getSharedPreferences("SHARED_PREF", MODE_PRIVATE)
         val text = sharedPreferences.getString("shared preferences", null)
         mBinding.etSearchBar.setText(text)
+        listFilter(parseContacts(), adapter)
+    }
+
+    private fun listFilter(contacts: List<ContactItem>, adapter: Adapter) {
         val etSearchBarText = mBinding.etSearchBar.text
-        val contacts = parseContacts()
         adapter.submitList(contacts.filter {
             it.name.startsWith(etSearchBarText.toString(), true)
                     || it.name.contains(etSearchBarText.toString(), true)
