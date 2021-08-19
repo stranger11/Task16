@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.core.content.edit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.task16.Adapter
 import com.example.task16.data.ContactItem
@@ -27,11 +28,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(mBinding.root)
         contacts = parseContacts()
         initRecyclerView()
-        setListenerTextChanges()
+        setFilterChangedListener()
         loadFilterValue()
     }
 
-    private fun setListenerTextChanges() {
+    private fun setFilterChangedListener() {
         mBinding.etSearchBar.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -57,10 +58,7 @@ class MainActivity : AppCompatActivity() {
     private fun saveFilterValue(etSearchBarTxt: String) {
         val sharedPreferences: SharedPreferences =
                 this.getSharedPreferences(SHARED_PREF, MODE_PRIVATE)
-        sharedPreferences
-                .edit()
-                .putString(SHARED_PREF_KEY, etSearchBarTxt)
-                .apply()
+        sharedPreferences.edit() { putString(SHARED_PREF_KEY, etSearchBarTxt) }
     }
 
     private fun loadFilterValue() {
