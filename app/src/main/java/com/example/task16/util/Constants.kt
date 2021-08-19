@@ -1,6 +1,6 @@
 package com.example.task16.util
 
-
+const val SHARED_PREF = "shared preferences name"
 const val SHARED_PREF_KEY = "shared preferences"
 const val PHONES_JSON = """[{
     "name": "(Приёмная)",

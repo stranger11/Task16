@@ -10,6 +10,7 @@ import com.example.task16.Adapter
 import com.example.task16.data.ContactItem
 import com.example.task16.databinding.ActivityMainBinding
 import com.example.task16.util.PHONES_JSON
+import com.example.task16.util.SHARED_PREF
 import com.example.task16.util.SHARED_PREF_KEY
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -25,24 +26,18 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         contacts = parseContacts()
-        adapter = Adapter()
         initRecyclerView()
-        initListFilter(adapter, contacts)
-        loadState()
+        setListenerTextChanges()
+        loadFilterValue()
     }
 
-    private fun initListFilter(adapter: Adapter, contacts: List<ContactItem>) {
+    private fun setListenerTextChanges() {
         mBinding.etSearchBar.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val etSearchBarText = mBinding.etSearchBar.text
-                if (etSearchBarText.isEmpty()) {
-                    adapter.submitList(contacts)
-                } else {
-                    listFilter()
-                    saveState(etSearchBarText.toString())
-                }
+                filterContacts()
+                saveFilterValue(mBinding.etSearchBar.toString())
             }
         })
     }
@@ -55,32 +50,33 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         mBinding.recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = Adapter()
         mBinding.recyclerView.adapter = adapter
     }
 
-    private fun saveState(etSearchBarTxt: String) {
+    private fun saveFilterValue(etSearchBarTxt: String) {
         val sharedPreferences: SharedPreferences =
-                this.getSharedPreferences("SHARED_PREF", MODE_PRIVATE)
+                this.getSharedPreferences(SHARED_PREF, MODE_PRIVATE)
         sharedPreferences
                 .edit()
                 .putString(SHARED_PREF_KEY, etSearchBarTxt)
                 .apply()
     }
 
-    private fun loadState() {
+    private fun loadFilterValue() {
         val sharedPreferences: SharedPreferences =
-                this.getSharedPreferences("SHARED_PREF", MODE_PRIVATE)
+                this.getSharedPreferences(SHARED_PREF, MODE_PRIVATE)
         mBinding.etSearchBar.setText(sharedPreferences.getString(
                 SHARED_PREF_KEY,
                 null))
-        listFilter()
+        filterContacts()
     }
 
-    private fun listFilter() {
-        val etSearchBarText = mBinding.etSearchBar.text
+    private fun filterContacts() {
+        val textForFilter = mBinding.etSearchBar.text.toString()
         adapter.submitList(contacts.filter {
-            it.name.startsWith(etSearchBarText.toString(), true)
-                    || it.name.contains(etSearchBarText.toString(), true)
+            it.name.startsWith(textForFilter, true)
+                    || it.name.contains(textForFilter, true)
         })
     }
 }
