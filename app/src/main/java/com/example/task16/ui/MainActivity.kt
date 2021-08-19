@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.task16.Adapter
 import com.example.task16.data.ContactItem
@@ -16,15 +17,16 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var adapter: Adapter
-    private lateinit var contacts: ArrayList<ContactItem>
+    private lateinit var contacts: List<ContactItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         contacts = parseContacts()
-        adapter = Adapter(contacts)
+        adapter = Adapter()
         initRecyclerView(adapter)
+        adapter.submitList(contacts)
         initListFilter(adapter, contacts)
     }
 
@@ -35,9 +37,9 @@ class MainActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val etSearchBarText = mBinding.etSearchBar.text
                 if (etSearchBarText.isEmpty()) {
-                    adapter.setList(contacts)
+                    adapter.submitList(contacts)
                 } else {
-                    adapter.setList(contacts.filter {
+                    adapter.submitList(contacts.filter {
                         it.name.startsWith(etSearchBarText.toString(), true)
                                 || it.name.contains(etSearchBarText.toString(), true)
                     })
@@ -46,9 +48,9 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun parseContacts() : ArrayList<ContactItem> {
+    private fun parseContacts() : List<ContactItem> {
         val gson = Gson()
-        val tokenForParse = object : TypeToken<ArrayList<ContactItem>>() {}.type
+        val tokenForParse = object : TypeToken<List<ContactItem>>() {}.type
         return gson.fromJson(PHONES_JSON, tokenForParse)
     }
 
