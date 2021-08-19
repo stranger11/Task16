@@ -9,19 +9,18 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
+        android:layout_height="70dp"
+        android:layout_width="match_parent"
         style="@style/toolbar">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp">
 
         <EditText
             android:id="@+id/etSearchBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="@string/enter_name"
             style="@style/editText" />
 
-        </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
 
