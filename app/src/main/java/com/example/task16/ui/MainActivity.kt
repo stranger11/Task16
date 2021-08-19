@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var adapter: Adapter
-    private lateinit var contacts: List<ContactItem>
+    private lateinit var contacts: ArrayList<ContactItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,9 +46,9 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun parseContacts() : List<ContactItem> {
+    private fun parseContacts() : ArrayList<ContactItem> {
         val gson = Gson()
-        val tokenForParse = object : TypeToken<List<ContactItem>>() {}.type
+        val tokenForParse = object : TypeToken<ArrayList<ContactItem>>() {}.type
         return gson.fromJson(PHONES_JSON, tokenForParse)
     }
 
