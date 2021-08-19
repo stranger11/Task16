@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Task16</string>
+    <string name="enter_name">Введите имя</string>
 </resources>
