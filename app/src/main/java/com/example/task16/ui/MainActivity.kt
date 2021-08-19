@@ -1,9 +1,11 @@
 package com.example.task16.ui
 
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.EditText
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.task16.Adapter
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+        loadState()
         contacts = parseContacts()
         adapter = Adapter()
         initRecyclerView(adapter)
@@ -43,6 +46,8 @@ class MainActivity : AppCompatActivity() {
                         it.name.startsWith(etSearchBarText.toString(), true)
                                 || it.name.contains(etSearchBarText.toString(), true)
                     })
+                    saveState(etSearchBarText.toString())
+
                 }
             }
         })
@@ -57,5 +62,22 @@ class MainActivity : AppCompatActivity() {
     private fun initRecyclerView(adapter: Adapter) {
         mBinding.recyclerView.layoutManager = LinearLayoutManager(this)
         mBinding.recyclerView.adapter = adapter
+    }
+
+    private fun saveState(list: String) {
+        val sharedPreferences: SharedPreferences =
+                this.getSharedPreferences("SHARED_PREF",
+                        MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("sss", list)
+        editor.apply()
+    }
+
+    private fun loadState() {
+        val sharedPreferences: SharedPreferences =
+                this.getSharedPreferences("SHARED_PREF", MODE_PRIVATE)
+        val t = sharedPreferences.getString("sss", null)
+        mBinding.etSearchBar.setText(t)
+
     }
 }
