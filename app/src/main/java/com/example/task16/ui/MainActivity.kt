@@ -22,19 +22,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var adapter: Adapter
     private lateinit var contacts: List<ContactItem>
+    private lateinit var store: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+        store = getSharedPreferences(SHARED_PREF, MODE_PRIVATE)
         contacts = parseContacts()
         initRecyclerView()
         setFilterChangedListener()
         loadFilterValue()
-    }
-
-    private fun initSharedPref() : SharedPreferences{
-        return getSharedPreferences(SHARED_PREF, MODE_PRIVATE)
     }
 
     private fun setFilterChangedListener() {
@@ -61,11 +59,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun saveFilterValue(filterValue: String) {
-        initSharedPref().edit(commit = true) { putString(FILTER_VALUE_KEY, filterValue) }
+        store.edit(commit = true) { putString(FILTER_VALUE_KEY, filterValue) }
     }
 
     private fun loadFilterValue() {
-        val filterValue = initSharedPref().getString(
+        val filterValue = store.getString(
                 FILTER_VALUE_KEY,
                 null)
         mBinding.etSearchBar.setText(filterValue)
