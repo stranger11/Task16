@@ -33,7 +33,6 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             phone.text = item.phone
             type.text = item.type
         }
-
 }
 
 object ContactItemDiffCallback : DiffUtil.ItemCallback<ContactItem>() {
