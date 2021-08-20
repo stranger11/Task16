@@ -15,7 +15,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 private const val SHARED_PREF = "shared preferences name"
-private const val SHARED_PREF_KEY = "shared preferences"
+private const val FILTER_VALUE_KEY = "shared preferences"
 
 class MainActivity : AppCompatActivity() {
 
@@ -59,16 +59,16 @@ class MainActivity : AppCompatActivity() {
     private fun saveFilterValue(etSearchBarTxt: String) {
         val sharedPreferences: SharedPreferences =
                 getSharedPreferences(SHARED_PREF, MODE_PRIVATE)
-        sharedPreferences.edit(commit = true) { putString(SHARED_PREF_KEY, etSearchBarTxt) }
+        sharedPreferences.edit(commit = true) { putString(FILTER_VALUE_KEY, etSearchBarTxt) }
     }
 
     private fun loadFilterValue() {
         val sharedPreferences: SharedPreferences =
                 getSharedPreferences(SHARED_PREF, MODE_PRIVATE)
-        val text = sharedPreferences.getString(
-                SHARED_PREF_KEY,
+        val filterValue = sharedPreferences.getString(
+                FILTER_VALUE_KEY,
                 null)
-        mBinding.etSearchBar.setText(text)
+        mBinding.etSearchBar.setText(filterValue)
         filterContacts()
     }
 
