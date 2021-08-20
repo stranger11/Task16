@@ -56,10 +56,10 @@ class MainActivity : AppCompatActivity() {
         mBinding.recyclerView.adapter = adapter
     }
 
-    private fun saveFilterValue(etSearchBarTxt: String) {
+    private fun saveFilterValue(filterValue: String) {
         val sharedPreferences: SharedPreferences =
                 getSharedPreferences(SHARED_PREF, MODE_PRIVATE)
-        sharedPreferences.edit(commit = true) { putString(FILTER_VALUE_KEY, etSearchBarTxt) }
+        sharedPreferences.edit(commit = true) { putString(FILTER_VALUE_KEY, filterValue) }
     }
 
     private fun loadFilterValue() {
