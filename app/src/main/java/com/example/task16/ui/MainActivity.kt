@@ -1,10 +1,12 @@
 package com.example.task16.ui
 
+import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.task16.Adapter
@@ -54,7 +56,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         mBinding.recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = Adapter()
+        adapter = Adapter { phoneNumber ->
+            openCaller(phoneNumber)
+        }
         mBinding.recyclerView.adapter = adapter
     }
 
@@ -76,5 +80,12 @@ class MainActivity : AppCompatActivity() {
             it.name.startsWith(textForFilter, true)
                     || it.name.contains(textForFilter, true)
         })
+    }
+
+    private fun openCaller(phoneNumber: String) {
+        val uri = "tel:$phoneNumber"
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.data = Uri.parse(uri)
+        startActivity(intent)
     }
 }

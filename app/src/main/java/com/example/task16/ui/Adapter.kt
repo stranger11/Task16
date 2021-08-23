@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task16.data.ContactItem
 
-class Adapter : ListAdapter<ContactItem, ViewHolder>(ContactItemDiffCallback) {
+class Adapter(private val onClick: (String) -> Unit) : ListAdapter<ContactItem,
+        ViewHolder>(ContactItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout,
@@ -19,7 +20,7 @@ class Adapter : ListAdapter<ContactItem, ViewHolder>(ContactItemDiffCallback) {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onClick)
     }
 }
 
@@ -28,10 +29,13 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var phone: TextView = view.findViewById(R.id.textPhone)
         private var type: TextView = view.findViewById(R.id.textType)
 
-        fun bind(item: ContactItem) {
+        fun bind(item: ContactItem, onClick: (String) -> Unit) {
             name.text = item.name
             phone.text = item.phone
             type.text = item.type
+            itemView.setOnClickListener {
+                onClick(item.phone)
+            }
         }
 }
 
