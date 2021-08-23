@@ -16,7 +16,6 @@ import com.example.task16.util.PHONES_JSON
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-
 private const val SHARED_PREF = "shared preferences name"
 private const val FILTER_VALUE_KEY = "shared preferences"
 
@@ -58,7 +57,7 @@ class MainActivity : AppCompatActivity() {
     private fun initRecyclerView() {
         mBinding.recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = Adapter {
-            goToPhone(it)
+            openPhone(it)
         }
         mBinding.recyclerView.adapter = adapter
     }
@@ -83,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun goToPhone(phoneNumber: String) {
+    private fun openPhone(phoneNumber: String) {
         val uri = "tel:$phoneNumber"
         val intent = Intent(Intent.ACTION_DIAL)
         intent.data = Uri.parse(uri)

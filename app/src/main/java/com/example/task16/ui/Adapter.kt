@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.task16.data.ContactItem
 
-class Adapter(private val onClick: (String) -> Unit) : ListAdapter<ContactItem, ViewHolder>(ContactItemDiffCallback) {
+class Adapter(private val onClick: (String) -> Unit) : ListAdapter<ContactItem,
+        ViewHolder>(ContactItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout,
