@@ -56,8 +56,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         mBinding.recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = Adapter {
-            openPhone(it)
+        adapter = Adapter { phoneNumber ->
+            openCaller(phoneNumber)
         }
         mBinding.recyclerView.adapter = adapter
     }
@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun openPhone(phoneNumber: String) {
+    private fun openCaller(phoneNumber: String) {
         val uri = "tel:$phoneNumber"
         val intent = Intent(Intent.ACTION_DIAL)
         intent.data = Uri.parse(uri)
